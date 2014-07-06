@@ -1,0 +1,10 @@
+services:
+    forumhulp.real_postcount.listener:
+        class: forumhulp\real_postcount\event\listener
+        arguments:
+            - @config
+            - @controller.helper
+            - @user
+            - @template
+        tags:
+            - { name: event.listener }

@@ -1,0 +1,32 @@
+{
+	"name": "forumhulp/real_postcount",
+	"type": "phpbb-extension",
+	"description": "An extension counting real posts",
+	"homepage": "http://forumhulp.com",
+	"version": "3.1.0",
+	"keywords": ["forumhulp", "phpbb", "extension", "real postcount", "posts"],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "John Peskens",
+			"username": "John P",
+			"email": "info@forumhulp.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3",
+		"phpbb/phpbb": "3.1.*@dev"
+	},
+	"extra": {
+		"display-name": "Real Post Count",
+		"branch-alias": {
+			"dev-master": "1.0-dev"
+		},
+		"version-check": {
+			"host": "forumhulp.com",
+			"directory": "/ext",
+			"filename": "index.php?id=27"
+		}
+	}
+}
