@@ -20,9 +20,9 @@
 	},
 	"extra": {
 		"display-name": "Real Post Count",
-		"branch-alias": {
-			"dev-master": "1.0-dev"
-		},
+		"soft-require": {
+           "phpbb/phpbb": "3.1.*@dev"
+        },
 		"version-check": {
 			"host": "forumhulp.com",
 			"directory": "/ext",
