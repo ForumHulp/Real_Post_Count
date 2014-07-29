@@ -62,10 +62,9 @@ class listener implements EventSubscriberInterface
     {
 		if ($event['mode'] == 'features')
 		{
-			$config_set_ext = $event['display_vars'];
-			$config_set_vars = array_slice($config_set_ext['vars'], 0, 16, true);
+			$display_vars = $event['display_vars'];
 			
-			$config_set_vars['real_postcount'] = 
+			$add_config_var['real_postcount'] = 
 				array(
 					'lang' 		=> 'POST_COUNT',
 					'validate'	=> 'int',
@@ -73,8 +72,8 @@ class listener implements EventSubscriberInterface
 					'explain'	=> true
 				);
 
-			$config_set_vars += array_slice($config_set_ext['vars'], 16, count($config_set_ext['vars']) - 1, true);
-			$event['display_vars'] = array('title' => $config_set_ext['title'], 'vars' => $config_set_vars);
+			$display_vars['vars'] = insert_config_array($display_vars['vars'], $add_config_var, array('after' =>'allow_quick_reply'));
+			$event['display_vars'] = array('title' => $display_vars['title'], 'vars' => $display_vars['vars']);
 		}
     }
 	
