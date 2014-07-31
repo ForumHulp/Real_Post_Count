@@ -43,10 +43,22 @@ class listener implements EventSubscriberInterface
             'core.acp_board_config_edit_add'	=> 'load_config_on_setup',
 			'core.user_setup'					=> 'load_language_on_setup',
 			'core.submit_post_end'				=> 'add_post_count',
-			'core.index_modify_page_title'		=> 'real_post_count'	
+			'core.index_modify_page_title'		=> 'real_post_count',
+			'core.viewtopic_modify_post_row'	=> 'display_real_post_count'
 		);
     }
 
+	public function display_real_post_count($event)
+	{
+		$template_data = $event['post_row'];
+		$sql = 'SELECT user_real_posts FROM ' . USERS_TABLE . ' WHERE user_id = ' . $event['poster_id'];
+		$result = $this->db->sql_query($sql);
+		$user_real_posts = (int) $this->db->sql_fetchfield('user_real_posts');
+
+		$template_data += array('REAL_POSTCOUNT' => $user_real_posts);
+		$event['post_row'] = $template_data;
+	}
+	
 	public function real_post_count($event)
 	{
 		$this->template->assign_vars(array(
