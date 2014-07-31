@@ -23,16 +23,18 @@ class listener implements EventSubscriberInterface
     protected $helper;
 	protected $user;
 	protected $template;
+	protected $db;
 
     /**
     * Constructor
     */
-    public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\user $user, \phpbb\template\template $template)
+    public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\user $user, \phpbb\template\template $template, \phpbb\db\driver\driver_interface $db)
     {
         $this->config = $config;
 		$this->helper = $helper;
 		$this->user = $user;
 		$this->template = $template;
+		$this->db = $db;
     }
 
     static public function getSubscribedEvents()
@@ -53,9 +55,11 @@ class listener implements EventSubscriberInterface
 		));
 	}
 
-	public function add_post_count()
+	public function add_post_count($post)
 	{
 		set_config('real_postcount', $this->config['real_postcount'] + 1, true);
+		$sql = 'UPDATE ' . USERS_TABLE . ' SET user_real_posts = user_real_posts + 1 WHERE user_id = ' . $this->user->data['user_id'];
+		$this->db->sql_query($sql);
 	}
 	
     public function load_config_on_setup($event)

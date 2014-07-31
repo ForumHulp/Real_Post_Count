@@ -21,6 +21,28 @@ class install_real_postcount extends \phpbb\db\migration\migration
 		return array('\phpbb\db\migration\data\v310\dev');
 	}
 
+	public function update_schema()
+	{
+		return array(
+			'add_columns'	=> array(
+				USERS_TABLE	=> array(
+					'user_real_posts' => array('INT:11', 0),
+				),
+			),
+		);
+	}
+
+	public function revert_schema()
+	{
+		return array(
+			'drop_columns'	=> array(
+				USERS_TABLE	=> array(
+					'user_real_posts',
+				),
+			)
+		);
+	}
+
 	public function update_data()
 	{
 		return array(
@@ -28,4 +50,5 @@ class install_real_postcount extends \phpbb\db\migration\migration
 			array('config.add', array('real_postcount_version', '3.1.0'))
 		);
 	}
+	
 }

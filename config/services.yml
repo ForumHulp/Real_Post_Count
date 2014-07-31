@@ -6,5 +6,6 @@ services:
             - @controller.helper
             - @user
             - @template
+            - @dbal.conn
         tags:
             - { name: event.listener }
