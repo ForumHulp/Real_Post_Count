@@ -44,9 +44,17 @@ class listener implements EventSubscriberInterface
 			'core.user_setup'					=> 'load_language_on_setup',
 			'core.submit_post_end'				=> 'add_post_count',
 			'core.index_modify_page_title'		=> 'real_post_count',
-			'core.viewtopic_modify_post_row'	=> 'display_real_post_count'
+			'core.viewtopic_modify_post_row'	=> 'display_real_post_count',
+			'core.viewtopic_cache_user_data'	=> 'display_real_rank'
 		);
     }
+
+	public function display_real_rank($event)
+	{
+		$real_rank = $event['row'];
+		$real_rank['user_posts'] = $real_rank['user_real_posts'];
+		$event['row'] = $real_rank;
+	}
 
 	public function display_real_post_count($event)
 	{
