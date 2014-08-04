@@ -45,9 +45,58 @@ class listener implements EventSubscriberInterface
 			'core.submit_post_end'				=> 'add_post_count',
 			'core.index_modify_page_title'		=> 'real_post_count',
 			'core.viewtopic_modify_post_row'	=> 'display_real_post_count',
-			'core.viewtopic_cache_user_data'	=> 'display_real_rank'
+			'core.ucp_pm_view_messsage'			=> 'display_pm_real_rank',
+			
+//			'core.memberlist_view_profile'		=> 'display_memberlist_view_profile',
+			'core.memberlist_prepare_profile_data' => 'display_real_post_count_memberlist',
+			
+			'core.modify_user_rank'			=> 'modify_user_rank'
 		);
     }
+
+	public function modify_user_rank($event)
+	{
+		$real_rank = $event['user_data'];
+		if (!isset($real_rank['user_real_posts']))
+		{
+			$sql = 'SELECT user_real_posts FROM ' . USERS_TABLE . ' WHERE user_id = ' . $real_rank['user_id'];
+			$result = $this->db->sql_query($sql);
+			$real_rank['user_real_posts'] = (int) $this->db->sql_fetchfield('user_real_posts');
+		}		
+		$real_rank['user_posts'] = $real_rank['user_real_posts'];
+		$event['user_posts'] = $real_rank;
+	}
+
+
+
+	public function display_memberlist_view_profile($event)
+	{
+		$real_rank = $event['member'];		
+		$real_rank['user_posts'] = $real_rank['user_real_posts'];
+		$event['member'] = $real_rank;
+	}
+	
+	public function display_real_post_count_memberlist($event)
+	{
+		$real_rank = $event['data'];
+
+//		$real_rank['user_posts'] = $real_rank['user_real_posts'];
+//		$event['data'] = $real_rank;
+		
+		$template_data = $event['template_data'];
+
+		$template_data += array('REAL_POSTCOUNT' => $real_rank['user_real_posts']);
+		$event['template_data'] = $template_data;
+	}
+
+	public function display_pm_real_rank($event)
+	{
+		$real_rank = $event['message_row'];
+		
+		$template_data = $event['msg_data'];
+		$template_data += array('REAL_POSTCOUNT' => $real_rank['user_real_posts']);
+		$event['msg_data'] = $template_data;
+	}
 
 	public function display_real_rank($event)
 	{
