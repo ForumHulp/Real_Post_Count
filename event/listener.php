@@ -7,7 +7,7 @@
 *
 */
 
-namespace forumhulp\real_postcount\event;
+namespace forumhulp\realpostcount\event;
 
 /**
 * @ignore
@@ -154,8 +154,8 @@ class listener implements EventSubscriberInterface
 	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-			'ext_name' => 'forumhulp/real_postcount',
-			'lang_set' => 'real_postcount_common',
+			'ext_name' => 'forumhulp/realpostcount',
+			'lang_set' => 'realpostcount_common',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
 	}

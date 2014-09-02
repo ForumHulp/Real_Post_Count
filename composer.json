@@ -1,5 +1,5 @@
 {
-	"name": "forumhulp/real_postcount",
+	"name": "forumhulp/realpostcount",
 	"type": "phpbb-extension",
 	"description": "An extension counting real posts",
 	"homepage": "http://forumhulp.com",
@@ -9,7 +9,6 @@
 	"authors": [
 		{
 			"name": "John Peskens",
-			"username": "John P",
 			"email": "info@forumhulp.com",
 			"role": "Developer"
 		}

@@ -7,7 +7,7 @@
 *
 */
 
-namespace forumhulp\real_postcount;
+namespace forumhulp\realpostcount;
 
 class ext extends \phpbb\extension\base
 {
