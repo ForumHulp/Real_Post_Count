@@ -62,18 +62,18 @@ class listener implements EventSubscriberInterface
 			$sql = 'SELECT user_real_posts FROM ' . USERS_TABLE . ' WHERE user_id = ' . $real_rank['user_id'];
 			$result = $this->db->sql_query($sql);
 			$real_rank['user_real_posts'] = (int) $this->db->sql_fetchfield('user_real_posts');
-		}		
+		}
 		$real_rank['user_posts'] = $real_rank['user_real_posts'];
 		$event['user_posts'] = $real_rank;
 	}
 
 	public function display_memberlist_view_profile($event)
 	{
-		$real_rank = $event['member'];		
+		$real_rank = $event['member'];
 		$real_rank['user_posts'] = $real_rank['user_real_posts'];
 		$event['member'] = $real_rank;
 	}
-	
+
 	public function display_real_post_count_memberlist($event)
 	{
 		$real_rank = $event['data'];
@@ -113,7 +113,7 @@ class listener implements EventSubscriberInterface
 		$template_data += array('REAL_POSTCOUNT' => $user_real_posts);
 		$event['post_row'] = $template_data;
 	}
-	
+
 	public function real_post_count($event)
 	{
 		$this->template->assign_vars(array(
@@ -135,7 +135,7 @@ class listener implements EventSubscriberInterface
 		{
 			$display_vars = $event['display_vars'];
 
-			$add_config_var['real_postcount'] = 
+			$add_config_var['real_postcount'] =
 				array(
 					'lang' 		=> 'POST_COUNT',
 					'validate'	=> 'int',
