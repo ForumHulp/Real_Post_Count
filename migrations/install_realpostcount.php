@@ -7,7 +7,7 @@
 *
 */
 
-namespace forumhulp\realpostcount\migration;
+namespace forumhulp\realpostcount\migrations;
 
 class install_realpostcount extends \phpbb\db\migration\migration
 {
