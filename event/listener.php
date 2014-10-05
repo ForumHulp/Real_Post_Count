@@ -40,17 +40,14 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.acp_board_config_edit_add'	=> 'load_config_on_setup',
-			'core.user_setup'					=> 'load_language_on_setup',
-			'core.submit_post_end'				=> 'add_post_count',
-			'core.index_modify_page_title'		=> 'real_post_count',
-			'core.viewtopic_modify_post_row'	=> 'display_real_post_count',
-			'core.ucp_pm_view_messsage'			=> 'display_pm_real_rank',
-
-//			'core.memberlist_view_profile'		=> 'display_memberlist_view_profile',
-			'core.memberlist_prepare_profile_data' => 'display_real_post_count_memberlist',
-
-			'core.modify_user_rank'			=> 'modify_user_rank'
+			'core.acp_board_config_edit_add'		=> 'load_config_on_setup',
+			'core.user_setup'						=> 'load_language_on_setup',
+			'core.submit_post_end'					=> 'add_post_count',
+			'core.index_modify_page_title'			=> 'real_post_count',
+			'core.viewtopic_modify_post_row'		=> 'display_real_post_count',
+			'core.ucp_pm_view_messsage'				=> 'display_pm_real_rank',
+			'core.memberlist_prepare_profile_data'	=> 'display_real_post_count_memberlist',
+			'core.modify_user_rank'					=> 'modify_user_rank'
 		);
 	}
 
@@ -64,7 +61,7 @@ class listener implements EventSubscriberInterface
 			$real_rank['user_real_posts'] = (int) $this->db->sql_fetchfield('user_real_posts');
 		}
 		$real_rank['user_posts'] = $real_rank['user_real_posts'];
-		$event['user_posts'] = $real_rank;
+		$event['user_posts'] = $real_rank['user_posts'];
 	}
 
 	public function display_memberlist_view_profile($event)
@@ -78,12 +75,13 @@ class listener implements EventSubscriberInterface
 	{
 		$real_rank = $event['data'];
 
-//		$real_rank['user_posts'] = $real_rank['user_real_posts'];
-//		$event['data'] = $real_rank;
+		$memberdays = max(1, round((time() - $real_rank['user_regdate']) / 86400));
+		$posts_per_day = $real_rank['user_real_posts'] / $memberdays;
+		$percentage = ($this->config['real_postcount']) ? min(100, ($real_rank['user_real_posts'] / $this->config['real_postcount']) * 100) : 0;
 
 		$template_data = $event['template_data'];
 
-		$template_data += array('REAL_POSTCOUNT' => $real_rank['user_real_posts']);
+		$template_data += array('REAL_POSTCOUNT' => $real_rank['user_real_posts'] . ' (' . $this->user->lang('POST_PCT', $percentage) . '. ' . $this->user->lang('POST_DAY', $posts_per_day) .')');
 		$event['template_data'] = $template_data;
 	}
 

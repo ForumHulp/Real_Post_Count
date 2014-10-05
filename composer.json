@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "An extension counting real posts",
 	"homepage": "http://forumhulp.com",
-	"version": "3.1.0.RC4",
+	"version": "3.1.0.RC5",
 	"keywords": ["forumhulp", "phpbb", "extension", "real postcount", "posts"],
 	"license": "GPL-2.0",
 	"authors": [

@@ -13,7 +13,7 @@ class install_realpostcount extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['real_postcount_version']) && version_compare($this->config['real_postcount_version'], '3.1.0.RC4', '>=');
+		return isset($this->config['real_postcount_version']) && version_compare($this->config['real_postcount_version'], '3.1.0.RC5', '>=');
 	}
 
 	static public function depends_on()
@@ -46,7 +46,7 @@ class install_realpostcount extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			array('config.add', array('real_postcount_version', '3.1.0.RC4')),
+			array('config.add', array('real_postcount_version', '3.1.0.RC5')),
 			array('config.add', array('real_postcount', 0, 1)),
 			array('custom', array(array($this, 'copy__postcount_data'))),
 		);
