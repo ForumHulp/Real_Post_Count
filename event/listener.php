@@ -122,7 +122,7 @@ class listener implements EventSubscriberInterface
 
 	public function add_post_count($post)
 	{
-		set_config('real_postcount', $this->config['real_postcount'] + 1, true);
+		$this->config->set('real_postcount', $this->config['real_postcount'] + 1, true);
 		$sql = 'UPDATE ' . USERS_TABLE . ' SET user_real_posts = user_real_posts + 1 WHERE user_id = ' . $this->user->data['user_id'];
 		$this->db->sql_query($sql);
 	}
